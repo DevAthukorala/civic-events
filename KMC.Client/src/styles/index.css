@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base resets ── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply font-jakarta bg-surface-app dark:bg-surface-dark-app text-slate-900 dark:text-slate-100 min-h-screen flex flex-col overflow-x-hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-outfit font-bold tracking-tight;
+  }
+
+  a { @apply no-underline transition-all duration-150; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { @apply bg-surface-app dark:bg-surface-dark-app; }
+  ::-webkit-scrollbar-thumb { @apply bg-slate-300 dark:bg-slate-600 rounded; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-slate-400 dark:bg-slate-500; }
+}
+
+/* ── Hero slideshow animation ── */
+@keyframes heroFadeIn {
+  from { opacity: 0; transform: scale(1.04); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Toast slide-in animation ── */
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+
+.hero-slide {
+  @apply absolute inset-0 bg-cover bg-center opacity-0 transition-opacity duration-1000;
+}
+.hero-slide.active {
+  @apply opacity-100;
+  animation: heroFadeIn 1s ease forwards;
+}
+
+/* ── Spin animation (loading spinner) ── */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin-animation { animation: spin 1.2s linear infinite; display: inline-block; }
+
+/* ── Glassmorphism utility ── */
+.glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ── Gallery strip scroll ── */
+.gallery-strip {
+  @apply flex gap-3 overflow-x-auto pb-2;
+  scrollbar-width: thin;
+  scroll-snap-type: x mandatory;
+}
+.gallery-strip::-webkit-scrollbar { height: 4px; }
+.gallery-strip-item {
+  @apply relative flex-shrink-0 rounded-xl overflow-hidden cursor-pointer;
+  width: 160px;
+  height: 100px;
+  scroll-snap-align: start;
+}
+.gallery-strip-item img {
+  @apply w-full h-full object-cover transition-transform duration-300;
+}
+.gallery-strip-item:hover img { transform: scale(1.07); }
+.gallery-strip-caption {
+  @apply absolute bottom-0 left-0 right-0 text-white text-[0.65rem] font-semibold px-2 py-1 truncate;
+  background: linear-gradient(transparent, rgba(0,0,0,0.7));
+}
+
+/* ── Footer background texture ── */
+.footer-bg-image {
+  @apply absolute inset-0 opacity-5 bg-cover bg-center pointer-events-none;
+  background-image: url('/imgs/kandy-tooth-temple-illuminated-in-the-evening-title-photo_orig.jpg');
+}
+
+/* ── Progress bar fill animation ── */
+.progress-bar-fill {
+  @apply h-full rounded-full transition-all duration-500;
+  background: linear-gradient(90deg, #4F46E5, #6366F1, #8B5CF6);
+}
+.progress-bar-fill.full {
+  background: linear-gradient(90deg, #F43F5E, #EF4444);
+}
